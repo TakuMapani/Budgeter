@@ -20,4 +20,7 @@
     <string name="strSpendingType">Food</string>
     <string name="strSpendingDate">12-Feb-2019</string>
     <string name="str_dialog_heading">Spending</string>
+
+    <string name="spending_dialog_pos_bt_str">Sigh :(</string>
+    <string name="spending_dialog_neg_bt_str">Nope!</string>
 </resources>
