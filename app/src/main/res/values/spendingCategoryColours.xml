@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="spendingColours">
+    <item name="spendingFood">#FF70A2</item>
+    <item name="spendingElectronics">#1FC4EB</item>
+    <item name="spendingShopping">#4CA35A</item>
+    <item name="spendingClothes">#5B5B99</item>
+    <item name="spendingBills">#FD3D3D</item>
+</array>
+</resources>

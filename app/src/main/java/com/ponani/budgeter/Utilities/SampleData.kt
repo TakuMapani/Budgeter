@@ -4,6 +4,9 @@ import com.ponani.budgeter.database.SpendingItem
 import java.math.BigDecimal
 import java.util.*
 
+/**
+ * Sample data for testing out the database and layout of the application
+ */
 object SampleData {
 
     fun getSampleData(): MutableList<SpendingItem>? {
