@@ -3,22 +3,18 @@ package com.ponani.budgeter
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ponani.budgeter.database.SpendingItem
 import com.ponani.budgeter.ui.SpendingListAdapter
 import com.ponani.budgeter.viewModels.MainViewModel
 
@@ -56,15 +52,39 @@ class MainActivity : AppCompatActivity() {
         spendingViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
 
-
-        val recyclerView =findViewById<RecyclerView>(R.id.recyclerViewSpending)
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewSpending)
         val adapter = SpendingListAdapter(this)
         recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
 
         spendingViewModel.spendingList.observe(this, Observer { spendingList ->
-            spendingList?.let { adapter.setSpending(it)}
+            spendingList?.let { adapter.setSpending(it as MutableList<SpendingItem>) }
         })
+
+        /**
+         * function to handle swipping recyclerview item
+         */
+        val touchHelperCallback = object :
+            ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                var position: Int = viewHolder.adapterPosition
+                var item: SpendingItem = adapter.deleteItem(position)
+                spendingViewModel.deleteItem(item)
+            }
+
+        }
+
+        //create ItemTouchHelper and attach it to the recycler view
+        val itemTouchHelper = ItemTouchHelper(touchHelperCallback)
+        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -80,7 +100,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         var id: Int = item.itemId
-        if (id == R.id.action_settings){
+        if (id == R.id.action_settings) {
             spendingViewModel.insertSampleData()
             return true
         }

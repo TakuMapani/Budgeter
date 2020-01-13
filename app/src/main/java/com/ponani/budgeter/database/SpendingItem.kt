@@ -27,4 +27,6 @@ class SpendingItem(
         spendingDescription = _spendingDescription
         spendingAmount = _spendingAmount
     }
+
+
 }

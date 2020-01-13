@@ -9,10 +9,10 @@ import com.ponani.budgeter.database.SpendingItem
 import com.ponani.budgeter.database.SpendingRepo
 import kotlinx.coroutines.launch
 
-class MainViewModel(application: Application): AndroidViewModel(application) {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repo : SpendingRepo
-    val spendingList : LiveData<List<SpendingItem>>
+    private val repo: SpendingRepo
+    val spendingList: LiveData<List<SpendingItem>>
 
     init {
         //Get a reference to the DAO which is used to initialise the repo
@@ -31,5 +31,10 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     fun insertSampleData() = viewModelScope.launch {
         repo.insertSampleData()
+    }
+
+    fun deleteItem(item: SpendingItem) = viewModelScope.launch {
+        repo.deleteSpendingItem(item)
+
     }
 }

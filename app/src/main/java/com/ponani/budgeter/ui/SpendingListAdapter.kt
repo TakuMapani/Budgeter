@@ -20,7 +20,7 @@ class SpendingListAdapter internal constructor(
 ) : RecyclerView.Adapter<SpendingListAdapter.SpendingViewHolder>(){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var spendingItemList = emptyList<SpendingItem>()
+    private var spendingItemList = emptyList<SpendingItem>().toMutableList()
 
     //initialising the array that holds category colors
     private val spendingCategoryColorPicker : TypedArray = context.getResources().obtainTypedArray(R.array.spendingColours)
@@ -66,8 +66,23 @@ class SpendingListAdapter internal constructor(
 
     }
 
-    internal fun setSpending(spendingItemList:List<SpendingItem>){
+    internal fun setSpending(spendingItemList:MutableList<SpendingItem>) {
         this.spendingItemList = spendingItemList
         notifyDataSetChanged()
+    }
+
+    /**
+     * The function is used to delete item by swipping from the view only
+     * Returns deleted item which will be removed from the database by the viewHolder/Repo
+     * tempPosition variable used in case of undo,
+     * TODO: implement undo delete
+     */
+    fun deleteItem(position: Int): SpendingItem {
+        var tempItem : SpendingItem  = spendingItemList.get(position)
+        Constants.TEMP_ITEM = tempItem
+        var tempItemPosition : Int = position //to be used later on
+        spendingItemList.removeAt(position)
+        notifyItemRemoved(position)
+        return tempItem
     }
 }

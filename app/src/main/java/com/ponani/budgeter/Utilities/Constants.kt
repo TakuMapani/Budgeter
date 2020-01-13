@@ -1,6 +1,7 @@
 package com.ponani.budgeter.Utilities
 
 import com.ponani.budgeter.R
+import com.ponani.budgeter.database.SpendingItem
 
 object Constants {
     val DIALOG_DATA_ID : String = "id"
@@ -16,4 +17,7 @@ object Constants {
         R.drawable.ic_electronics,
         R.drawable.ic_clothes
     )
+
+    //Storing Temporary spending item to be deleted later
+    var TEMP_ITEM : SpendingItem = SampleData.getSampleData()!!.get(1)
 }
