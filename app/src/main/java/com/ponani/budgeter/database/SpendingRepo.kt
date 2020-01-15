@@ -2,10 +2,12 @@ package com.ponani.budgeter.database
 
 import androidx.lifecycle.LiveData
 import com.ponani.budgeter.Utilities.SampleData
+import java.math.BigDecimal
 
 class SpendingRepo (private val spendingDAO: SpendingDAO){
 
     val spendingList : LiveData<List<SpendingItem>> = spendingDAO.getSpendingList()
+    val total : LiveData<BigDecimal> = spendingDAO.getTotal()
 
     //TODO: fix getSpendingByID
     /*fun  getSpendingByID(id: Int){

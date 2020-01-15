@@ -9,80 +9,90 @@
     app:cardElevation="2dp"
     app:cardMaxElevation="2dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvSpendingDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif"
+            android:paddingStart="8dp"
+            android:text="@string/strSpendingDate"
+            android:textAlignment="textStart"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@+id/tvSpendingItem"
+            app:layout_constraintTop_toBottomOf="@+id/tvSpendingItem" />
+
+        <TextView
+            android:id="@+id/tvAmount"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="8dp"
+            android:singleLine="true"
+            android:text="$23"
+            android:textAlignment="textStart"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/tvSpendingItem"
+            app:layout_constraintEnd_toStartOf="@+id/pieChartSpending"
+            app:layout_constraintStart_toEndOf="@+id/tvSpendingItem" />
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChartSpending"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </com.github.mikephil.charting.charts.PieChart>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/FABSpendingItem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="40dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
             android:clickable="true"
             android:focusable="true"
             app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.444"
             app:srcCompat="@drawable/ic_dollar" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <TextView
+            android:id="@+id/tvSpendingItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:fontFamily="sans-serif-black"
+            android:paddingStart="8dp"
+            android:text="@string/strSpendingDescr"
+            android:textAlignment="textStart"
+            android:textColor="#C6000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="51dp" />
 
-                <TextView
-                    android:id="@+id/tvSpendingItem"
-                    android:layout_width="355dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:fontFamily="sans-serif-black"
-                    android:paddingStart="8dp"
-                    android:text="@string/strSpendingDescr"
-                    android:textAlignment="center"
-                    android:textColor="#C6000000"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tvSpendingType"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif"
-                    android:text="@string/strSpendingType"
-                    android:textAlignment="center"
-                    android:textAllCaps="false"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:id="@+id/tvSpendingDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:fontFamily="sans-serif"
-                    android:text="@string/strSpendingDate"
-                    android:textAlignment="center"
-                    android:textSize="10sp" />
-            </LinearLayout>
-        </LinearLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

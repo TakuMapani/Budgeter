@@ -2,6 +2,7 @@ package com.ponani.budgeter.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import java.math.BigDecimal
 
 @Dao
 interface SpendingDAO {
@@ -13,6 +14,9 @@ interface SpendingDAO {
 
     @Query("SELECT * FROM SPENDING_TABLE")
     fun getSpendingList(): LiveData<List<SpendingItem>>
+
+    @Query("SELECT COALESCE(SUM(COALESCE(spendingAmount,0)),0) FROM spending_table")
+    fun getTotal(): LiveData<BigDecimal>
 
     @Delete
     suspend fun deleteSpendingItem(spendingItem: SpendingItem)

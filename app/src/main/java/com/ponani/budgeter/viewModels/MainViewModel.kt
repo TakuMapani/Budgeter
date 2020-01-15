@@ -8,17 +8,20 @@ import com.ponani.budgeter.database.SpendingDatabase
 import com.ponani.budgeter.database.SpendingItem
 import com.ponani.budgeter.database.SpendingRepo
 import kotlinx.coroutines.launch
+import java.math.BigDecimal
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repo: SpendingRepo
     val spendingList: LiveData<List<SpendingItem>>
+    val total : LiveData<BigDecimal>
 
     init {
         //Get a reference to the DAO which is used to initialise the repo
         val spendingDAO = SpendingDatabase.getDatabase(application, viewModelScope).spendingDAO()
         repo = SpendingRepo(spendingDAO)
         spendingList = repo.spendingList
+        total = repo.total
     }
 
     /**

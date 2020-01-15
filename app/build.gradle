@@ -55,6 +55,10 @@ dependencies {
 
 // Testing
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
+
+    //Charts
+    implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'

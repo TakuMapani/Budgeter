@@ -60,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         spendingViewModel.spendingList.observe(this, Observer { spendingList ->
             spendingList?.let { adapter.setSpending(it as MutableList<SpendingItem>) }
         })
+        spendingViewModel.total.observe(this, Observer { total -> adapter.setSpendingTotal(total)})
 
         /**
          * function to handle swipping recyclerview item
