@@ -4,7 +4,12 @@ import com.ponani.budgeter.R
 import com.ponani.budgeter.database.SpendingItem
 
 object Constants {
+
     val DIALOG_DATA_ID : String = "id"
+
+    val UNDODELETE : String = "undo"
+    val RE_ADD_SPENDING: Int = 12
+    val RE_ADD_SPENDING_STR : String = "readd"
 
     //predefined spending categories that will be used in creating the fragment
     val SPENDING_CATEGORY_LIST : Array<String> = arrayOf("Bills","Groceries","Food","Tech","Clothes")

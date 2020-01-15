@@ -40,4 +40,8 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         repo.deleteSpendingItem(item)
 
     }
+
+    fun insertSpendingItem(item: SpendingItem) = viewModelScope.launch {
+        repo.insertSpendingItem(item)
+    }
 }

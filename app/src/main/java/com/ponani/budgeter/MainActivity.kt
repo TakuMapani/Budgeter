@@ -1,5 +1,8 @@
 package com.ponani.budgeter
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -14,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ponani.budgeter.Utilities.Constants
 import com.ponani.budgeter.database.SpendingItem
 import com.ponani.budgeter.ui.SpendingListAdapter
 import com.ponani.budgeter.viewModels.MainViewModel
@@ -77,7 +81,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 var position: Int = viewHolder.adapterPosition
-                var item: SpendingItem = adapter.deleteItem(position)
+                var item: SpendingItem = adapter.deleteItem(position, recyclerView)
                 spendingViewModel.deleteItem(item)
             }
 
@@ -86,6 +90,15 @@ class MainActivity : AppCompatActivity() {
         //create ItemTouchHelper and attach it to the recycler view
         val itemTouchHelper = ItemTouchHelper(touchHelperCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
+
+        val reAddDeletedBrodCastReceiver = object : BroadcastReceiver(){
+            override fun onReceive(p0: Context?, p1: Intent?) {
+                val task : Int  = intent.getIntExtra(Constants.RE_ADD_SPENDING_STR,Constants.RE_ADD_SPENDING)
+                val item : SpendingItem = Constants.TEMP_ITEM
+                spendingViewModel.insertSpendingItem(item)
+            }
+
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
