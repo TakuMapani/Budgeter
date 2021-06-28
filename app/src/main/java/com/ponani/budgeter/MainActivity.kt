@@ -3,6 +3,7 @@ package com.ponani.budgeter
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -14,6 +15,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +29,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private lateinit var spendingViewModel: MainViewModel
+
+    /**
+     * Local variable that receives broadcast for undoing delete
+     */
+    val reAddDeletedBrodCastReceiver = object : BroadcastReceiver(){
+        override fun onReceive(p0: Context?, p1: Intent?) {
+            val task : Int  = intent.getIntExtra(Constants.RE_ADD_SPENDING_STR,Constants.RE_ADD_SPENDING)
+            val item : SpendingItem = Constants.TEMP_ITEM
+            spendingViewModel.insertSpendingItem(item)
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,14 +105,9 @@ class MainActivity : AppCompatActivity() {
         val itemTouchHelper = ItemTouchHelper(touchHelperCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
 
-        val reAddDeletedBrodCastReceiver = object : BroadcastReceiver(){
-            override fun onReceive(p0: Context?, p1: Intent?) {
-                val task : Int  = intent.getIntExtra(Constants.RE_ADD_SPENDING_STR,Constants.RE_ADD_SPENDING)
-                val item : SpendingItem = Constants.TEMP_ITEM
-                spendingViewModel.insertSpendingItem(item)
-            }
-
-        }
+        //Register the broadcast receive to allow it to receive broadcasts and act on them.
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(reAddDeletedBrodCastReceiver, IntentFilter(Constants.UNDODELETE))
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -112,6 +121,7 @@ class MainActivity : AppCompatActivity() {
 //        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
 //    }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         var id: Int = item.itemId
         if (id == R.id.action_settings) {
@@ -120,4 +130,13 @@ class MainActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onDestroy() {
+        //unregister receiver to prevent memory leaks.
+        LocalBroadcastManager.getInstance(this)
+            .unregisterReceiver(reAddDeletedBrodCastReceiver)
+        super.onDestroy()
+    }
+
+
 }

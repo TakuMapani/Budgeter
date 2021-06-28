@@ -116,7 +116,6 @@ class SpendingListAdapter internal constructor(
      * The function is used to delete item by swipping from the view only
      * Returns deleted item which will be removed from the database by the viewHolder/Repo
      * tempPosition variable used in case of undo,
-     * TODO: implement undo delete
      */
     fun deleteItem(position: Int,rv: RecyclerView): SpendingItem {
         tempItem = spendingItemList.get(position)
@@ -128,6 +127,11 @@ class SpendingListAdapter internal constructor(
         return tempItem
     }
 
+    /**
+     * Undo swipe delete of a spending Item
+     * Notifies RecyclerView of data change
+     * Broadcasts on app to undo the delete, received in mainActivity
+     */
     fun undoDelete() {
         val intent: Intent = Intent(Constants.UNDODELETE)
         intent.putExtra(Constants.RE_ADD_SPENDING_STR, Constants.RE_ADD_SPENDING)
@@ -136,6 +140,7 @@ class SpendingListAdapter internal constructor(
         LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent)
     }
 
+    //Shows undo snack bar when item is deleted
     fun showUndoSnackBar(rv : RecyclerView){
         val snackbar : Snackbar = Snackbar.make(
             rv,"Undo", Snackbar.LENGTH_LONG
