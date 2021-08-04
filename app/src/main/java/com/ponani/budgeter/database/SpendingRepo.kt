@@ -30,4 +30,8 @@ class SpendingRepo (private val spendingDAO: SpendingDAO){
     suspend fun insertSampleData(){
         spendingDAO.insertSampleData(SampleData.getSampleData())
     }
+
+    suspend fun getSpendingItemByID(itemID : Int): SpendingItem{
+        return spendingDAO.getSpendingItemByID(itemID)
+    }
 }

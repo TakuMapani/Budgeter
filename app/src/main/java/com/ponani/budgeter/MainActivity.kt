@@ -26,6 +26,8 @@ import com.ponani.budgeter.viewModels.MainViewModel
 
 class MainActivity : AppCompatActivity() {
 
+    val SPENDING_DIALOG = "SPENDING_FRAG"
+
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     private lateinit var spendingViewModel: MainViewModel
@@ -50,8 +52,7 @@ class MainActivity : AppCompatActivity() {
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            showDialog()
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         //val navView: NavigationView = findViewById(R.id.nav_view)
@@ -108,6 +109,14 @@ class MainActivity : AppCompatActivity() {
         //Register the broadcast receive to allow it to receive broadcasts and act on them.
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(reAddDeletedBrodCastReceiver, IntentFilter(Constants.UNDODELETE))
+    }
+
+    //Opens Spending Dialog box from floating action button
+    //No items are passed to the dialog box
+    //Dialog box set nonCancellable
+    private fun showDialog() {
+        var spendingDialog : SpendingDialog = SpendingDialog().newInstance()
+        spendingDialog.show(supportFragmentManager,SPENDING_DIALOG)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
