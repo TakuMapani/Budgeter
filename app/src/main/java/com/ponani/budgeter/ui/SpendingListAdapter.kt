@@ -68,7 +68,7 @@ class SpendingListAdapter internal constructor(
         //To change body of created functions use File | Settings | File Templates.
         val current = spendingItemList[position]
         //Set description text
-        holder.tvSDescription?.text = current.spendingDescription + "$" + current.spendingAmount
+        holder.tvSDescription?.text = current.spendingDescription
         //date format
         val dateFormat = SimpleDateFormat("EEE hh:mm dd/MM/yyyy")
         holder.tvSDate?.text = dateFormat.format(current.spendingDate)

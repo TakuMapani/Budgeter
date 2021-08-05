@@ -28,18 +28,16 @@
 
         <TextView
             android:id="@+id/tvAmount"
-            android:layout_width="60dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="24dp"
             android:singleLine="true"
             android:text="$23"
             android:textAlignment="textStart"
             android:textColor="#000000"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/tvSpendingItem"
-            app:layout_constraintEnd_toStartOf="@+id/pieChartSpending"
-            app:layout_constraintStart_toEndOf="@+id/tvSpendingItem" />
+            app:layout_constraintEnd_toStartOf="@+id/guideline2" />
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieChartSpending"
@@ -58,7 +56,7 @@
             android:id="@+id/FABSpendingItem"
             android:layout_width="40dp"
             android:layout_height="39dp"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:clickable="true"
@@ -72,10 +70,11 @@
 
         <TextView
             android:id="@+id/tvSpendingItem"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
             android:fontFamily="sans-serif-black"
             android:paddingStart="8dp"
             android:text="@string/strSpendingDescr"
@@ -83,6 +82,7 @@
             android:textColor="#C6000000"
             android:textSize="14sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/tvAmount"
             app:layout_constraintStart_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -91,7 +91,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="51dp" />
+            app:layout_constraintGuide_begin="56dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="348dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

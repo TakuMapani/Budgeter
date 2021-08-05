@@ -56,8 +56,29 @@ class SpendingDialog : DialogFragment() {
 
         initViewModel()
 
+        /**
+         * Set Button actions for adding a spending item or cancelling
+         */
+        this.bAdd!!.setOnClickListener{
+            saveAndContinue()
+            dismiss()
+        }
+
+        this.bCancel!!.setOnClickListener{
+            dismiss()
+        }
+
         return rootView
 
+    }
+
+    /**
+     * Function to save spendingItem to the database
+     */
+    private fun saveAndContinue() {
+        viewModel.insertSpendingItem(spendingDesc?.text.toString(),spendingAmount?.text.toString(),
+            spendingType!!.selectedItemPosition
+        )
     }
 
     private fun initViewModel() {
