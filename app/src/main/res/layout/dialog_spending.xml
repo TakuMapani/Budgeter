@@ -22,7 +22,7 @@
             android:text="SPENDING"
             android:textAlignment="center"
             android:textColor="#E8EAF6"
-            android:textSize="20sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Description"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/edDialogDescription"
             app:layout_constraintStart_toStartOf="parent" />
@@ -44,20 +44,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Amount"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBaseline_toBaselineOf="@+id/edDialogAmount"
             app:layout_constraintStart_toStartOf="@+id/tvDialogDesc" />
 
         <TextView
             android:id="@+id/tvDialogCat"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="Type"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/spinnerDialogType"
-            app:layout_constraintStart_toStartOf="@+id/tvDialogAmount" />
+            app:layout_constraintStart_toStartOf="@+id/tvDialogAmount"
+            app:layout_constraintTop_toTopOf="@+id/spinnerDialogType" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrier2"
@@ -78,7 +79,7 @@
             android:hint="What was paid for"
             android:inputType="text"
             android:minHeight="48dp"
-            android:textSize="16sp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/barrier2"
             app:layout_constraintTop_toBottomOf="@+id/tvDialogHeading" />
@@ -91,9 +92,9 @@
             android:layout_marginEnd="8dp"
             android:ems="10"
             android:hint="$Amount"
-            android:inputType="textPersonName"
+            android:inputType="numberSigned|numberDecimal"
             android:minHeight="48dp"
-            android:textSize="16sp"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/edDialogDescription"
             app:layout_constraintTop_toBottomOf="@+id/edDialogDescription" />

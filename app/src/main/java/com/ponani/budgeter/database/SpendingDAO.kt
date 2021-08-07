@@ -16,7 +16,7 @@ interface SpendingDAO {
     fun getSpendingList(): LiveData<List<SpendingItem>>
 
     @Query("SELECT * FROM SPENDING_TABLE WHERE spending_id=:id")
-    fun getSpendingItemByID(id : Int): SpendingItem
+    suspend fun getSpendingItemByID(id : Int): SpendingItem
 
     @Query("SELECT COALESCE(SUM(COALESCE(spendingAmount,0)),0) FROM spending_table")
     fun getTotal(): LiveData<BigDecimal>

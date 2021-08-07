@@ -24,7 +24,7 @@ import com.ponani.budgeter.database.SpendingItem
 import com.ponani.budgeter.ui.SpendingListAdapter
 import com.ponani.budgeter.viewModels.MainViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SpendingListAdapter.OnItemClickListener {
 
     val SPENDING_DIALOG = "SPENDING_FRAG"
 
@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerViewSpending)
-        val adapter = SpendingListAdapter(this)
+        val adapter = SpendingListAdapter(this,this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
 
@@ -116,6 +116,21 @@ class MainActivity : AppCompatActivity() {
     //Dialog box set nonCancellable
     private fun showDialog() {
         var spendingDialog : SpendingDialog = SpendingDialog().newInstance()
+        spendingDialog.isCancelable = false
+        spendingDialog.show(supportFragmentManager,SPENDING_DIALOG)
+    }
+
+    /**
+     * Function called when starting dialog from existing SpendingItem
+     * Send over item ID to dialog to obtain the data
+     */
+    private fun startDialog(id: Int) {
+        val arguments = Bundle()
+        arguments.putInt(Constants.DIALOG_DATA_ID,id)
+
+        var spendingDialog = SpendingDialog().newInstance()
+        spendingDialog.arguments = arguments
+        spendingDialog.isCancelable = false
         spendingDialog.show(supportFragmentManager,SPENDING_DIALOG)
     }
 
@@ -146,6 +161,12 @@ class MainActivity : AppCompatActivity() {
             .unregisterReceiver(reAddDeletedBrodCastReceiver)
         super.onDestroy()
     }
+
+    override fun onItemClick(item: SpendingItem) {
+        startDialog(item.spendingID)
+    }
+
+
 
 
 }

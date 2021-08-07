@@ -15,26 +15,31 @@ import java.util.*
 class SpendingDialogViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repo: SpendingRepo
-    val spendingItem : MutableLiveData<SpendingItem> = MutableLiveData()
+    val spendingItem: MutableLiveData<SpendingItem> = MutableLiveData()
 
     init {
-        val spendingDAO = SpendingDatabase.getDatabase(application,viewModelScope).spendingDAO()
+        val spendingDAO = SpendingDatabase.getDatabase(application, viewModelScope).spendingDAO()
         repo = SpendingRepo(spendingDAO)
 
     }
 
-    fun insertSpendingItem(spendingDesc : String, spendingAmt : String, spendingCat : Int) {
+    fun insertSpendingItem(spendingDesc: String, spendingAmt: String, spendingCat: Int) {
         val calendar = Calendar.getInstance()
         val date = calendar.time
         var item = spendingItem.value
 
         if (item == null) {
-            if(TextUtils.isEmpty(spendingDesc.trim()) || TextUtils.isEmpty(spendingAmt.trim())){
+            if (TextUtils.isEmpty(spendingDesc.trim()) || TextUtils.isEmpty(spendingAmt.trim())) {
                 return
             }
-            item = SpendingItem(date,spendingCat,spendingDesc, BigDecimal.valueOf(spendingAmt.trim().toLong()))
-        }else{
-            if(TextUtils.isEmpty(spendingDesc.trim()) || TextUtils.isEmpty(spendingAmt.trim())){
+            item = SpendingItem(
+                date,
+                spendingCat,
+                spendingDesc,
+                BigDecimal.valueOf(spendingAmt.trim().toLong())
+            )
+        } else {
+            if (TextUtils.isEmpty(spendingDesc.trim()) || TextUtils.isEmpty(spendingAmt.trim())) {
                 return
             }
             item.spendingAmount = BigDecimal.valueOf(spendingAmt.trim().toLong())
@@ -50,8 +55,9 @@ class SpendingDialogViewModel(application: Application) : AndroidViewModel(appli
     }
 
 
-    fun loadSpendingItem(itemID : Int) = viewModelScope.launch {
-        val item : SpendingItem = repo.getSpendingItemByID(itemID)
+    fun loadSpendingItem(itemID: Int) = viewModelScope.launch {
+        val item: SpendingItem = repo.getSpendingItemByID(itemID)
         spendingItem.postValue(item)
     }
+
 }

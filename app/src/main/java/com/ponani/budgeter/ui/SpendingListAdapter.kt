@@ -27,7 +27,8 @@ import java.math.RoundingMode
 import java.text.SimpleDateFormat
 
 class SpendingListAdapter internal constructor(
-    context: Context
+    context: Context,
+    private val listener : OnItemClickListener
 ) : RecyclerView.Adapter<SpendingListAdapter.SpendingViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -43,13 +44,24 @@ class SpendingListAdapter internal constructor(
         context.resources.obtainTypedArray(R.array.spendingColours)
 
 
-    inner class SpendingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class SpendingViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+    View.OnClickListener{
         val tvSDescription = itemView.findViewById<TextView?>(R.id.tvSpendingItem)
         val tvSDate = itemView.findViewById<TextView?>(R.id.tvSpendingDate)
         val fabSpendingItem: FloatingActionButton = itemView.findViewById(R.id.FABSpendingItem)
         val pieChart: PieChart = itemView.findViewById(R.id.pieChartSpending)
         val tvSAmount: TextView = itemView.findViewById(R.id.tvAmount)
 
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            val position = adapterPosition
+            if (position != RecyclerView.NO_POSITION) {
+                listener.onItemClick(spendingItemList[position])
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpendingViewHolder {
@@ -158,5 +170,9 @@ class SpendingListAdapter internal constructor(
     fun setSpendingTotal(total: BigDecimal?) {
         this.total = total
         notifyDataSetChanged()
+    }
+
+    interface OnItemClickListener{
+        fun onItemClick(item : SpendingItem)
     }
 }

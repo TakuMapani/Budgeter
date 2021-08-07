@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.ponani.budgeter.Utilities.Constants
 import com.ponani.budgeter.ui.SpinnerDialogAdapter
 import com.ponani.budgeter.viewModels.SpendingDialogViewModel
-import kotlinx.android.synthetic.main.dialog_spending.*
 
 class SpendingDialog : DialogFragment() {
 
@@ -23,6 +25,7 @@ class SpendingDialog : DialogFragment() {
     var spendingType: Spinner? = null
 
     private lateinit var viewModel: SpendingDialogViewModel
+
     //create an instance of dialog fragment
     fun newInstance(): SpendingDialog {
         var fragment: SpendingDialog = SpendingDialog()
@@ -59,12 +62,12 @@ class SpendingDialog : DialogFragment() {
         /**
          * Set Button actions for adding a spending item or cancelling
          */
-        this.bAdd!!.setOnClickListener{
+        this.bAdd!!.setOnClickListener {
             saveAndContinue()
             dismiss()
         }
 
-        this.bCancel!!.setOnClickListener{
+        this.bCancel!!.setOnClickListener {
             dismiss()
         }
 
@@ -76,7 +79,8 @@ class SpendingDialog : DialogFragment() {
      * Function to save spendingItem to the database
      */
     private fun saveAndContinue() {
-        viewModel.insertSpendingItem(spendingDesc?.text.toString(),spendingAmount?.text.toString(),
+        viewModel.insertSpendingItem(
+            spendingDesc?.text.toString(), spendingAmount?.text.toString(),
             spendingType!!.selectedItemPosition
         )
     }
@@ -89,9 +93,9 @@ class SpendingDialog : DialogFragment() {
          * When spending item is loaded, it populates views with text from existing spending item
          */
         viewModel.spendingItem.observe(this, Observer { item ->
-           spendingAmount?.setText(item.spendingAmount.toString())
-           spendingDesc?.setText(item.spendingDescription.toString())
-            spendingDesc?.setSelection(item.spendingCategory)
+            spendingAmount?.setText(item.spendingAmount.toString())
+            spendingDesc?.setText(item.spendingDescription.toString())
+            spendingType?.setSelection(item.spendingCategory)
         })
 
         /**
@@ -101,9 +105,9 @@ class SpendingDialog : DialogFragment() {
         if (arguments != null) run {
             val itemID: Int = arguments!!.getInt(Constants.DIALOG_DATA_ID)
             viewModel.loadSpendingItem(itemID)
-            dialogHeading?.setText("Edit Spengind")
-        }else{
-            dialogHeading?.setText("Enter Expense")
+            dialogHeading?.setText("Edit Spending")
+        } else {
+            dialogHeading?.text = "Enter Expense"
         }
     }
 
@@ -112,8 +116,8 @@ class SpendingDialog : DialogFragment() {
      */
     override fun onStart() {
         super.onStart()
-        val width = (resources.displayMetrics.widthPixels* 0.95).toInt()
-        dialog!!.window?.setLayout(width,ViewGroup.LayoutParams.WRAP_CONTENT)
+        val width = (resources.displayMetrics.widthPixels * 0.95).toInt()
+        dialog!!.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
 

@@ -1,5 +1,6 @@
 package com.ponani.budgeter.database
 
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.ponani.budgeter.Utilities.SampleData
 import java.math.BigDecimal
@@ -30,6 +31,7 @@ class SpendingRepo (private val spendingDAO: SpendingDAO){
     suspend fun insertSampleData(){
         spendingDAO.insertSampleData(SampleData.getSampleData())
     }
+
 
     suspend fun getSpendingItemByID(itemID : Int): SpendingItem{
         return spendingDAO.getSpendingItemByID(itemID)
